@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/matiasevillar/rt-chatty-app/issues"
   },
-  "homepage": "https://github.com/matiasevillar/rt-chatty-app#readme"
+  "homepage": "https://github.com/matiasevillar/rt-chatty-app#readme",
+  "dependencies": {
+    "validator": "^13.15.15"
+  }
 }
