@@ -1,5 +1,6 @@
 import validator from 'validator'
 
+// Data Validation
 const validateSignupData = (data) => {
   const errors = {}
   const { firstName, lastName, email, password } = data
@@ -39,8 +40,25 @@ const validateSignupData = (data) => {
   }
 }
 
-// Middleware functions
+const validateLoginData = (data) => {
+  const errors = {}
+  const { email, password } = data
 
+  if (!email) {
+    errors.email = 'Email is required'
+  } else if (!validator.isEmail(email.trim())) {
+    errors.email = 'Please provide a valid email address'
+  }
+  if (!password) {
+    errors.password = 'Password is required'
+  }
+  return {
+    isValid: Object.keys(errors).length === 0,
+    errors,
+  }
+}
+
+// Middleware functions
 export const validateSignup = (req, res, next) => {
   const validation = validateSignupData(req.body) // return {isValid, errors}
 
@@ -60,5 +78,25 @@ export const validateSignup = (req, res, next) => {
     password: req.body.password || '',
   }
   //The next() function is a crucial part of Express.js middleware. It tells Express to continue to the next middleware or route handler in the chain.
+  next()
+}
+
+export const validateLogin = (req, res, next) => {
+  const validation = validateLoginData(req.body)
+
+  if (!validation.isValid) {
+    return res.status(400).json({
+      success: false,
+      message: 'Validation Failed',
+      errors: validation.errors,
+    })
+  }
+
+  // Sanitize for controller use
+  req.sanitizedBody = {
+    email: req.body.email ? req.body.email.trim().toLowerCase() : '',
+    password: req.body.password || '',
+  }
+
   next()
 }

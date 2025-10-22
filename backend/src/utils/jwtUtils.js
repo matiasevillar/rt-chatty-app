@@ -18,7 +18,7 @@ export const generateTokenAndSetCookie = (res, user) => {
   )
 
   // Set JWT token as HTTP-only cookie
-  res.cookie('token-jwt', token, {
+  res.cookie('token', token, {
     httpOnly: true, // Prevents XSS attacks
     secure: process.env.NODE_ENV === 'production', // HTTPS only in production
     sameSite: 'strict', // CSRF protection
