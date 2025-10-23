@@ -2,6 +2,7 @@ import User from '../models/User.js'
 import bcrypt from 'bcryptjs'
 import { clearTokenCookie, generateTokenAndSetCookie } from '../utils/jwtUtils.js'
 import cloudinary from '../lib/cloudinary.js'
+import { ENV } from '../lib/env.js'
 
 export const signup = async (req, res) => {
   try {
@@ -55,7 +56,7 @@ export const signup = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      ...(process.env.NODE_ENV === 'development' && { error: error.message }),
+      ...(ENV.NODE_ENV === 'development' && { error: error.message }),
     })
   }
 }
@@ -100,7 +101,7 @@ export const login = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      ...(process.env.NODE_ENV === 'development' && { error: error.message }),
+      ...(ENV.NODE_ENV === 'development' && { error: error.message }),
     })
   }
 }
@@ -186,7 +187,7 @@ export const updateProfile = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Internal server error',
-      ...(process.env.NODE_ENV === 'development' && { error: error.message }),
+      ...(ENV.NODE_ENV === 'development' && { error: error.message }),
     })
   }
 }

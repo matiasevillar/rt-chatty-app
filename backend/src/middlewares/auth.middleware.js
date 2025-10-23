@@ -20,8 +20,8 @@ export const authenticate = async (req, res, next) => {
     }
 
     // We then verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
-    console.log('decoded', decoded)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET) // decoded contains {userId, email}
+
     // Get user from database (without password)
     const user = await User.findById(decoded.userId)
 
